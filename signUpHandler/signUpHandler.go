@@ -45,7 +45,7 @@ func HandleSignUp(r packagetypes.SignUpReq) error {
 	return nil
 }
 
-func getUserInformation(username string) (uint64, error) {
+func getUserInformation(username string) (int64, error) {
 	reqEndpoint := fmt.Sprintf(util.LinkMap["player_id"], username)
 	req := fasthttp.AcquireRequest()
 	res := fasthttp.AcquireResponse()
@@ -61,7 +61,7 @@ func getUserInformation(username string) (uint64, error) {
 	var parsed packagetypes.UserRes
 	json.Unmarshal(res.Body(), &parsed)
 
-	return strconv.ParseUint(parsed.UserId, 10, 32)
+	return strconv.ParseInt(parsed.UserId, 10, 32)
 }
 
 func iterateLeagues(userId int, client *db.PrismaClient, ctx context.Context) error {
