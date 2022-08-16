@@ -54,7 +54,7 @@ func handleLeague(leagueId uint, userId uint64, client *db.PrismaClient, ctx con
 			linkClauses[idx] = db.Players.ID.Equals(int(intPlayer))
 		}
 
-		roster, err := client.Roster.CreateOne(db.Roster.Player.Link(db.Players.Or(linkClauses...)), db.Roster.LeagueLeagueID.Set(int(leagueId))).Exec(ctx)
+		roster, err := client.Roster.CreateOne(db.Roster.Player.Link(linkClauses...), db.Roster.LeagueLeagueID.Set(int(leagueId)), db.Roster.UserID.Set(int(intOwner))).Exec(ctx)
 
 		if err != nil {
 			return err

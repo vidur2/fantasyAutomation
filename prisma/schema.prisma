@@ -19,7 +19,7 @@ model Roster {
   rosterId Int       @id @default(autoincrement())
   player   Players[]
   User           User?   @relation(fields: [userId], references: [fantasyOwnerId])
-  userId      Int?
+  userId      Int
   League         League? @relation(fields: [leagueLeagueId], references: [leagueId])
   leagueLeagueId Int?
 }

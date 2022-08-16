@@ -86,6 +86,8 @@ func FetchPlayers() error {
 		return err
 	}
 
+	// TODO iterate through users here
+
 	for pos, data := range playerMap {
 		c, err := clusters.KMeans(1000, 8, clusters.EuclideanDistance)
 		if err != nil {
