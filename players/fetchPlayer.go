@@ -86,7 +86,27 @@ func FetchPlayers() error {
 		return err
 	}
 
-	// TODO iterate through users here
+	users, err := client.User.FindMany().Exec(context.Background())
+
+	if err != nil {
+		return err
+	}
+
+	exploredLeagues := make(map[int]bool)
+
+	go func() {
+		client2 := db.NewClient()
+
+		err := client.Connect()
+
+		if err != nil {
+			return
+		}
+
+		for _, user := range users {
+			exploredLeagues, _ = RelinkPlayers(client2, user.FantasyOwnerID, exploredLeagues)
+		}
+	}()
 
 	for pos, data := range playerMap {
 		c, err := clusters.KMeans(1000, 8, clusters.EuclideanDistance)

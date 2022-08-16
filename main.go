@@ -18,19 +18,25 @@ func handler(ctx *fasthttp.RequestCtx) {
 		err := json.Unmarshal(ctx.Request.Body(), &reqBody)
 
 		if err != nil {
-			// TODO
+			handleError(err, ctx)
 		}
 
 		err = signuphandler.HandleSignUp(reqBody)
 
 		if err != nil {
-			// TODO
+			handleError(err, ctx)
 		}
-
-	case "/add_roster":
-		// TODO
 	}
 
+}
+
+func handleError(err error, ctx *fasthttp.RequestCtx) {
+	body := packagetypes.ErrorType{
+		Err: err,
+	}
+
+	bodyBytes, _ := json.Marshal(body)
+	ctx.Response.AppendBody(bodyBytes)
 }
 
 func main() {

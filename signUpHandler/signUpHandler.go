@@ -21,7 +21,7 @@ func HandleSignUp(r packagetypes.SignUpReq) error {
 		return err
 	}
 
-	fantasyOwnerId, err := getUserInformation(r.Email)
+	fantasyOwnerId, err := getUserInformation(r.Username)
 
 	if err != nil {
 		client.Disconnect()

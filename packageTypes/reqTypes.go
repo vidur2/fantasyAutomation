@@ -2,7 +2,7 @@ package packagetypes
 
 type SignUpReq struct {
 	Email    string
-	Password []byte
-	UserId   []uint
+	Password string
+	Username string
 	RosterId uint
 }

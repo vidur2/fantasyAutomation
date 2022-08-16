@@ -98,7 +98,7 @@ func getPlayerData(playerDoc soup.Root) map[string]float32 {
 				continue
 			}
 
-			avgStat := (retVal[cat]*float32(wkNum) + float32(stat)) / float32(adjWkNm)
+			avgStat := (retVal[cat]*float32(wkNum) + float32(stat)*float32(adjWkNm/len(tot))) / float32(adjWkNm)
 			retVal[cat] = avgStat
 		}
 	}
