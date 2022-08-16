@@ -1,0 +1,47 @@
+datasource db {
+  url      = "postgresql://vidurmodgil:vidur@localhost:5432/leagueDb"
+  provider = "postgresql"
+}
+
+generator generator {
+  provider = "go run github.com/prisma/prisma-client-go"
+}
+
+model User {
+  email          String 
+  password       String
+  fantasyOwnerId Int @unique @id
+  rosters        Roster[]
+  League         League[]
+}
+
+model Roster {
+  rosterId Int       @id @default(autoincrement())
+  player   Players[]
+  User           User?   @relation(fields: [userId], references: [fantasyOwnerId])
+  userId      Int?
+  League         League? @relation(fields: [leagueLeagueId], references: [leagueId])
+  leagueLeagueId Int?
+}
+
+model League {
+  leagueId Int      @id
+  users    User[]
+  rosters  Roster[]
+}
+
+model Players {
+  id              Int      @id
+  position        Position
+  category Int
+  Roster          Roster[]
+}
+
+enum Position {
+  QB
+  RB
+  WR
+  TE
+  K
+  DEF
+}
