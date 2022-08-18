@@ -11,8 +11,9 @@ type PlayerRes struct {
 }
 
 type RosterRes struct {
-	Players []string `json:"players"`
-	Owner   string   `json:"owner_id"`
+	Players  []string `json:"players"`
+	Owner    string   `json:"owner_id"`
+	RosterId int      `json:"roster_id"`
 }
 
 type UserRes struct {
@@ -24,4 +25,18 @@ type UserRes struct {
 
 type LeagueRes struct {
 	LeagueId string `json:"league_id"`
+}
+
+type NflStateRes struct {
+	Week int `json:"week"`
+}
+
+type TransactionsRes struct {
+	Players []Players `json:"players"`
+}
+
+type Players struct {
+	PlayerId        string `json:"player_id"`
+	PreviousOwnerId int    `json:"previous_owner_id"`
+	OwnerId         int    `json:"owner_id"`
 }

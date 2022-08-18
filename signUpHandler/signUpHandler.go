@@ -28,7 +28,7 @@ func HandleSignUp(r packagetypes.SignUpReq) error {
 		return err
 	}
 
-	_, err = client.User.CreateOne(db.User.Email.Set(r.Email), db.User.Password.Set(r.Password), db.User.FantasyOwnerID.Set(int(fantasyOwnerId))).Exec(prismaCtx)
+	_, err = client.User.CreateOne(db.User.FantasyOwnerID.Set(int(fantasyOwnerId)), db.User.Email.Set(r.Email), db.User.Password.Set(r.Password)).Exec(prismaCtx)
 
 	if err != nil {
 		client.Disconnect()

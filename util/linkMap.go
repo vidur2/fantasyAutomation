@@ -7,6 +7,7 @@ var LinkMap = map[string]string{
 	"league":         "https://api.sleeper.app/v1/league/%v",
 	"player_id":      "https://api.sleeper.app/v1/user/%v",
 	"player_stats":   "https://www.pro-football-reference.com/teams/%v/2022.htm",
+	"transactions":   "https://api.sleeper.app/v1/league/%v/transactions/%v",
 }
 
 var RUSH_RECV_STATS = map[string]int{"targets": 1, "rec": 1, "rec_yds": 1, "rec_td": 1, "rec_drops": -1, "rec_pass_rating": 1, "rush_att": 1, "rush_yds": 1}

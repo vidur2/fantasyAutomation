@@ -1,5 +1,7 @@
 package packagetypes
 
+import "github.com/vidur2/fantasyAutomation/prisma/db"
+
 type RosterValue struct {
 	RbVal PosVal
 	WrVal PosVal
@@ -9,5 +11,5 @@ type RosterValue struct {
 
 type PosVal struct {
 	Value     int
-	PlayerIds []int
+	PlayerIds []db.PlayersModel
 }

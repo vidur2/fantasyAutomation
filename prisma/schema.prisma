@@ -8,8 +8,8 @@ generator generator {
 }
 
 model User {
-  email          String 
-  password       String
+  email          String?
+  password       String?
   fantasyOwnerId Int @unique @id
   rosters        Roster[]
   League         League[]
@@ -20,6 +20,7 @@ model Roster {
   player   Players[]
   User           User?   @relation(fields: [userId], references: [fantasyOwnerId])
   userId      Int
+  rosterScore Int
   League         League? @relation(fields: [leagueLeagueId], references: [leagueId])
   leagueLeagueId Int?
 }
@@ -28,6 +29,7 @@ model League {
   leagueId Int      @id
   users    User[]
   rosters  Roster[]
+  rosterMap String?
 }
 
 model Players {

@@ -21,17 +21,17 @@ func CalcRosterVal(leagueId int, client *db.PrismaClient) ([]packagetypes.Roster
 		for _, player := range roster.Player() {
 			switch player.Position {
 			case "QB":
-				rosterNew.QbVal.Value += player.Category
-				rosterNew.QbVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player.ID)
+				rosterNew.QbVal.Value += player.Category / 4
+				rosterNew.QbVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player)
 			case "RB":
 				rosterNew.RbVal.Value += player.Category
-				rosterNew.RbVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player.ID)
+				rosterNew.RbVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player)
 			case "WR":
 				rosterNew.WrVal.Value += player.Category
-				rosterNew.WrVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player.ID)
+				rosterNew.WrVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player)
 			case "TE":
 				rosterNew.TeVal.Value += player.Category
-				rosterNew.TeVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player.ID)
+				rosterNew.TeVal.PlayerIds = append(rosterNew.RbVal.PlayerIds, player)
 			}
 		}
 	}

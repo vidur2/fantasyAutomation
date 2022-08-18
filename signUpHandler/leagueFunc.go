@@ -34,9 +34,11 @@ func handleLeague(leagueId uint, userId uint64, client *db.PrismaClient, ctx con
 	client.League.CreateOne(db.League.LeagueID.Set(int(leagueId)))
 
 	linkParams := make([]db.RosterWhereParam, len(parsedRes))
+	rosterMap := make(map[int]int)
 
 	for _, roster := range parsedRes {
 		intOwner, err := strconv.ParseUint(roster.Owner, 10, 32)
+		rosterMap[roster.RosterId] = int(intOwner)
 
 		if err != nil {
 			return err
@@ -54,18 +56,22 @@ func handleLeague(leagueId uint, userId uint64, client *db.PrismaClient, ctx con
 			linkClauses[idx] = db.Players.ID.Equals(int(intPlayer))
 		}
 
-		roster, err := client.Roster.CreateOne(db.Roster.Player.Link(linkClauses...), db.Roster.LeagueLeagueID.Set(int(leagueId)), db.Roster.UserID.Set(int(intOwner))).Exec(ctx)
+		fetchedRoster, err := client.Roster.CreateOne(db.Roster.RosterScore.Set(0), db.Roster.LeagueLeagueID.Set(int(leagueId)), db.Roster.UserID.Set(int(intOwner))).Exec(ctx)
 
 		if err != nil {
 			return err
 		}
 
 		if intOwner == userId {
-			linkParams = append(linkParams, db.Roster.RosterID.Equals(roster.RosterID))
+			linkParams = append(linkParams, db.Roster.RosterID.Equals(fetchedRoster.RosterID))
 		}
 	}
 
 	client.User.UpsertOne(db.User.FantasyOwnerID.Equals(int(userId))).Update(db.User.Rosters.Link(linkParams...), db.User.League.Link(db.League.LeagueID.Equals(int(leagueId)))).Exec(ctx)
+
+	rosterStr, _ := json.Marshal(rosterMap)
+
+	client.League.UpsertOne(db.League.LeagueID.Equals(int(leagueId))).Update(db.League.RosterMap.Set(string(rosterStr))).Exec(ctx)
 
 	return nil
 }
